@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "integral-tc"
+version = "0.1.0"
+description = ""
+authors = ["AnishP15 <39468239+AnishP15@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "integral_tc"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.31.0"
+flask = "^3.0.2"
+python-dotenv = "^1.0.1"
+redis = "^5.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

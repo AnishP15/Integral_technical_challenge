@@ -78,7 +78,7 @@ def format_resp(response: str, account_id: str):
         timestamp_utc = datetime.datetime.utcfromtimestamp(int(transaction["timeStamp"]))
 
         formatted_transaction = {
-            "id": transaction["hash"],  
+            "transaction_idx": transaction["transactionIndex"],  
             "accountId": account_id,
             "toAddress": transaction["to"],
             "fromAddress": transaction["from"],

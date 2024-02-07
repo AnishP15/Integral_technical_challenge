@@ -1,15 +1,17 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, json
 import requests
 from dotenv import load_dotenv
 import os 
 import datetime
-# My local endpoint: http://127.0.0.1:5000/api/accounts?account_id=0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97
+from db import TransactionStore
 
 app = Flask(__name__)
 
 load_dotenv()
 
 api_key = os.getenv("ETHERSCAN_API_KEY")
+
+ts = TransactionStore()
 
 @app.route('/api/balance', methods=['GET'])
 def get_token_balance():
@@ -21,9 +23,13 @@ def get_token_balance():
     try:
         response = requests.get(url)
         response.raise_for_status()
-        data = response.json()
+        data = response.json()      
 
-        return jsonify({"eth_balance":str(int(data["result"]) / (10 ** int(18)))})
+        bal = int(data["result"]) / (10 ** int(18))
+
+        ts.insert_transactions(account_id, bal)
+
+        return jsonify({"eth_balance":str(bal)})
 
     except requests.RequestException as e:
         return jsonify({"error": f"Error fetching data: {e}"}), 500
@@ -54,10 +60,18 @@ def get_account_transactions():
         data = response.json()
 
         final_query = format_resp(data, account_id) 
+
+        ts.insert_transactions(account_id, final_query)
+        
         return final_query
 
     except requests.RequestException as e:
         return jsonify({"error": f"Error fetching data: {e}"}), 500
+
+
+@app.route('/api/stored-transactions', methods=['GET'])
+def db_transactions():
+    return ts.get_all_data()
 
 
 def format_resp(response: str, account_id: str):

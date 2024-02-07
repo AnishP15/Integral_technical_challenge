@@ -3,7 +3,7 @@ from query import app
 from flask import json
 
 
-class TestGetAccountTransactions(unittest.TestCase):
+class TestQueries(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
 

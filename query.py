@@ -78,12 +78,12 @@ def format_resp(response: str, account_id: str):
         timestamp_utc = datetime.datetime.utcfromtimestamp(int(transaction["timeStamp"]))
 
         formatted_transaction = {
-            "id": transaction["hash"],  
+            "transaction_idx": transaction["transactionIndex"],  
             "accountId": account_id,
             "toAddress": transaction["to"],
             "fromAddress": transaction["from"],
             "type": "deposit" if int(transaction["value"]) > 0 else "withdrawal",
-            "amount": str(int(transaction["value"]) / (10 **    8)),   
+            "amount": str(int(transaction["value"]) / (10 ** 18)),   
             "symbol": "ETH",   
             "decimal": 18,
             "timestamp": timestamp_utc.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),   

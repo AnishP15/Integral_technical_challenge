@@ -15,6 +15,15 @@ ts = TransactionStore()
 
 @app.route('/api/balance', methods=['GET'])
 def get_token_balance():
+    """
+    Retrieve balance associated with the account.
+
+    Query Parameters:
+        account_id(str): Ethereum account address.
+
+    Returns:
+        dict: balance of account.
+    """
 
     account_id = request.args.get('account_id')
 
@@ -71,6 +80,15 @@ def get_account_transactions():
 
 @app.route('/api/stored-transactions', methods=['GET'])
 def db_transactions():
+    """
+    Retrieve all transactions associated with the each account stored on the db.
+
+    Query Parameters:
+        N/A
+
+    Returns:
+        dict: dictionary of {account: transactions}.
+    """
     return ts.get_all_data()
 
 

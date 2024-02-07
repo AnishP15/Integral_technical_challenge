@@ -9,9 +9,11 @@ class TransactionStore:
         self.collection = self.db[collection_name]
 
     def insert_balance(self, account_id, balance):
+        # Update or insert balance to existing account_id
         self.collection.update_one({'account_id': account_id}, {'$set': {'balance': balance}}, upsert=True)
 
     def insert_transactions(self, account_id, transactions):
+        # Update or insert transactions to existing account_id
         self.collection.update_one({'account_id': account_id}, {'$set': {'transactions': transactions}}, upsert=True)
 
     def get_account(self, account_id):

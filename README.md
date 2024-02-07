@@ -1,6 +1,6 @@
 # Integral_tc
 
-poetry install
+poetry install to get dependencies
 
 To start flask server: poetry run python query.py
 

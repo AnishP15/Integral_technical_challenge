@@ -62,7 +62,7 @@ def get_account_transactions():
 
     try:
 
-        url = f"https://api.etherscan.io/api?module=account&action=txlist&address={account_id}&apikey={api_key}"
+        url = f"https://api.etherscan.io/api?module=account&action=txlist&address={account_id}&sort=desc&apikey={api_key}"
         
         response = requests.get(url)
         response.raise_for_status()   
